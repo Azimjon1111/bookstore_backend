@@ -10,39 +10,39 @@ import {
 } from '@nestjs/common';
 
 import { BooksService } from './books.service';
-import { CreateShopDto } from './dto/create-shop.dto';
-import { UpdateShopDto } from './dto/update-shop.dto';
+import { CreateBookDto } from './dto/create-book.dto';
+import { UpdateBookDto } from './dto/update-book.dto';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Books')
 @Controller('books')
 export class BooksController {
-  constructor(private readonly BooksService: BooksService) { }
+  constructor(private readonly booksService: BooksService) { }
 
   @ApiBearerAuth()
   @Post()
-  async create(@Body() createShopDto: CreateShopDto, @Req() req: Request) {
-    console.log(req['user'], 'sss')
-    console.log(createShopDto, 'createShopDto')
-    return await this.BooksService.create(createShopDto, String(req['user']['sub']));
+  async create(@Body() createBookDto: CreateBookDto, @Req() req: Request) {
+    console.log(createBookDto, 'CreateBookDto')
+    return await this.booksService.create(createBookDto);
   }
+
   @Get()
   findAll() {
-    return this.BooksService.findAll();
+    return this.booksService.findAll();
   }
 
   @Get(':id')
   findById(@Param('id') id: string) {
-    return this.BooksService.findById(id);
+    return this.booksService.findById(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShopDto: UpdateShopDto) {
-    return this.BooksService.update(id, updateShopDto);
+  update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
+    return this.booksService.update(id, updateBookDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.BooksService.remove(id);
+    return this.booksService.remove(id);
   }
 }
