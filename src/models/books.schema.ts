@@ -30,7 +30,3 @@ export class Book {
 }
 
 export const BooksSchema = SchemaFactory.createForClass(Book)
-BooksSchema.index({
-  name: 'text',
-  description: 'text',
-})
