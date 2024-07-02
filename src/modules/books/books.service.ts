@@ -40,4 +40,18 @@ export class BooksService {
   async remove(id: string): Promise<BookDocument> {
     return this.booksModel.findByIdAndDelete(id).exec();
   }
+
+  async findTop10Books(): Promise<BookDocument[]> {
+    return this.booksModel.find().sort({ rating: -1 }).limit(10).exec();
+  }
+
+  async rateBook(id: string, rating: number): Promise<BookDocument> {
+    const book = await this.booksModel.findById(id).exec();
+    if (!book) {
+      throw new Error('Book not found');
+    }
+
+    book.rating = rating;
+    return book.save();
+  }
 }

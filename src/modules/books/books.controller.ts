@@ -35,7 +35,10 @@ export class BooksController {
   findAll() {
     return this.booksService.findAll();
   }
-
+  @Get('top-10')
+  findTop10Books() {
+    return this.booksService.findTop10Books();
+  }
   @Get(':id')
   findById(@Param('id') id: string) {
     return this.booksService.findById(id);
@@ -50,7 +53,18 @@ export class BooksController {
   remove(@Param('id') id: string) {
     return this.booksService.remove(id);
   }
-
+  @Post(':id/rate')
+  @ApiBody({
+    description: 'Rate a book',
+    schema: {
+      properties: {
+        rating: { type: 'number', example: 4.5 },
+      },
+    },
+  })
+  async rateBook(@Param('id') id: string, @Body('rating') rating: number) {
+    return this.booksService.rateBook(id, rating);
+  }
   @Post('upload')
   @ApiConsumes('multipart/form-data')
   @ApiBody({
