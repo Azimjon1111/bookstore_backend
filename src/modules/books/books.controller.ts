@@ -60,17 +60,21 @@ export class BooksController {
   @UseInterceptors(
     FileInterceptor('cover', {
       storage: diskStorage({
-        destination: '../../uploads',
+        destination: './src/uploads',
         filename: (req, file, callback) => {
           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
           const ext = extname(file.originalname);
           const filename = `${file.fieldname}-${uniqueSuffix}${ext}`;
+          console.log(filename, 'filename');
           callback(null, filename);
         },
       }),
     }),
   )
-  async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() createBookWithCoverDto: CreateBookWithCoverDto) {
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() createBookWithCoverDto: CreateBookWithCoverDto,
+  ) {
     console.log(file, 'file');
     console.log(createBookWithCoverDto, 'createBookWithCoverDto');
     return this.booksService.createWithCover(createBookWithCoverDto, file.filename);
