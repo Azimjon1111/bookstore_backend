@@ -13,7 +13,7 @@ export class Book {
   @Prop({ type: Date})
   published_date: Date;
 
-  @Prop({ref:'authors', type: Types.ObjectId, default: null, required: true})
+  @Prop({ref:'Author', type: Types.ObjectId, default: null, required: true})
   author: Types.ObjectId;
 
   @Prop()

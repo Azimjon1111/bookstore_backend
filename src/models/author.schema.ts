@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory,  } from '@nestjs/mongoose'
 import { HydratedDocument , Types} from 'mongoose'
 
 export type AuthorDocument = HydratedDocument<Author>
-@Schema({ collection: 'books', timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
+@Schema({ collection: 'authors', timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 export class Author {
   @Prop()
   first_name: string
