@@ -16,14 +16,11 @@ export class Author {
   @Prop({ type: Date})
   date_of_death: Date;
 
-  @Prop({ref:'books', type: Types.ObjectId, default: null, required: true})
-  books: Types.ObjectId;
+  // @Prop({ref:'books', type: Types.ObjectId, default: null})
+  // books: Types.ObjectId[];
 
   @Prop()
-  photo: number
-
-  @Prop()
-  cover: string
+  photo: string
 }
 
 export const AuthorSchema = SchemaFactory.createForClass(Author)

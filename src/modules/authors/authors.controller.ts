@@ -21,7 +21,7 @@ export class AuthorsController {
 
   @ApiBearerAuth()
   @Post()
-  async create(@Body() createAuthorDto: CreateAuthorDto, @Req() req: Request) {
+  async create(@Body() createAuthorDto: CreateAuthorDto) {
     console.log(createAuthorDto, 'CreateAuthorDto');
     return await this.authorsService.create(createAuthorDto);
   }
