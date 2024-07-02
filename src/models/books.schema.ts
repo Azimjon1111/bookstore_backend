@@ -1,32 +1,33 @@
-import { Prop, Schema, SchemaFactory,  } from '@nestjs/mongoose'
-import { HydratedDocument , Types} from 'mongoose'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
-export type BookDocument = HydratedDocument<Book>
+export type BookDocument = HydratedDocument<Book>;
+
 @Schema({ collection: 'books', timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 export class Book {
   @Prop()
-  name: string
+  name: string;
 
   @Prop()
-  description: string
+  description: string;
 
-  @Prop({ type: Date})
+  @Prop({ type: Date })
   published_date: Date;
 
-  @Prop({ref:'Author', type: Types.ObjectId, default: null, required: true})
+  @Prop({ ref: 'Author', type: Types.ObjectId, default: null, required: true })
   author: Types.ObjectId;
 
   @Prop()
-  rating: number
+  rating: number;
 
   @Prop()
-  cover: string
+  cover: string;
 
-  @Prop()
-  genres: string
+  @Prop({ type: [String] })
+  genres: string[];
 
-  @Prop()
-  tags: string
+  @Prop({ type: [String] })
+  tags: string[];
 }
 
-export const BooksSchema = SchemaFactory.createForClass(Book)
+export const BooksSchema = SchemaFactory.createForClass(Book);

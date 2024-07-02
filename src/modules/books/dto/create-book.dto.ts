@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, IsOptional, IsMongoId, IsDate } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsMongoId, IsDate, IsArray } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateBookDto {
@@ -24,6 +24,7 @@ export class CreateBookDto {
   })
   @Type(() => Date)
   @IsDate()
+  @IsOptional()
   published_date: Date;
 
   @ApiProperty({
@@ -38,6 +39,7 @@ export class CreateBookDto {
     example: 4.5,
   })
   @IsNumber()
+  @IsOptional()
   rating: number;
 
   @ApiProperty({
@@ -45,19 +47,22 @@ export class CreateBookDto {
     example: 'http://example.com/cover.jpg',
   })
   @IsString()
+  @IsOptional()
   cover: string;
 
   @ApiProperty({
     description: 'Genres of the book',
-    example: 'Fiction, Drama',
+    example: ['Fiction', 'Drama'],
   })
-  @IsString()
-  genres: string;
+  @IsArray()
+  @IsString({ each: true })
+  genres: string[];
 
   @ApiProperty({
     description: 'Tags associated with the book',
-    example: 'classic, American literature',
+    example: ['classic', 'American literature'],
   })
-  @IsString()
-  tags: string;
+  @IsArray()
+  @IsString({ each: true })
+  tags: string[];
 }
