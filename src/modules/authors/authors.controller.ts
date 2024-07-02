@@ -17,32 +17,37 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 @ApiTags('Authors')
 @Controller('authors')
 export class AuthorsController {
-  constructor(private readonly AuthorsService: AuthorsService) { }
+  constructor(private readonly authorsService: AuthorsService) {}
 
   @ApiBearerAuth()
   @Post()
   async create(@Body() createAuthorDto: CreateAuthorDto, @Req() req: Request) {
-    console.log(createAuthorDto, 'CreateAuthorDto')
-    return await this.AuthorsService.create(createAuthorDto);
+    console.log(createAuthorDto, 'CreateAuthorDto');
+    return await this.authorsService.create(createAuthorDto);
   }
 
   @Get()
   findAll() {
-    return this.AuthorsService.findAll();
+    return this.authorsService.findAll();
   }
-
+  @Get('with-top-books')
+  findAllWithTopBooks() {
+    return this.authorsService.findAllWithTopBooks();
+  }
   @Get(':id')
   findById(@Param('id') id: string) {
-    return this.AuthorsService.findById(id);
+    return this.authorsService.findById(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) {
-    return this.AuthorsService.update(id, updateAuthorDto);
+    return this.authorsService.update(id, updateAuthorDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.AuthorsService.remove(id);
+    return this.authorsService.remove(id);
   }
+
+
 }
