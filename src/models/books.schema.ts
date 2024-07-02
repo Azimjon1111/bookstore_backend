@@ -5,13 +5,13 @@ export type BookDocument = HydratedDocument<Book>;
 
 @Schema({ collection: 'books', timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 export class Book {
-  @Prop()
+  @Prop({required: true})
   name: string;
 
-  @Prop()
+  @Prop({required: true})
   description: string;
 
-  @Prop({ type: Date })
+  @Prop({ type: Date, required: true })
   published_date: Date;
 
   @Prop({ ref: 'Author', type: Types.ObjectId, default: null, required: true })
@@ -20,7 +20,7 @@ export class Book {
   @Prop()
   rating: number;
 
-  @Prop()
+  @Prop({})
   cover: string;
 
   @Prop({ type: [String] })

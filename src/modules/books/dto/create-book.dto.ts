@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, IsOptional, IsMongoId, IsDate, IsArray } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsMongoId, IsDate, IsArray, IsDefined, IsNotEmpty } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateBookDto {
@@ -8,6 +8,7 @@ export class CreateBookDto {
     example: 'The Great Gatsby',
   })
   @IsString()
+  @IsNotEmpty()
   name: string;
 
   @ApiProperty({
@@ -15,6 +16,7 @@ export class CreateBookDto {
     example: 'A novel written by American author F. Scott Fitzgerald.',
   })
   @IsString()
+  @IsNotEmpty()
   description: string;
 
   @ApiProperty({
@@ -43,16 +45,9 @@ export class CreateBookDto {
   rating: number;
 
   @ApiProperty({
-    description: 'URL of the cover image of the book',
-    example: 'http://example.com/cover.jpg',
-  })
-  @IsString()
-  @IsOptional()
-  cover: string;
-
-  @ApiProperty({
     description: 'Genres of the book',
     example: ['Fiction', 'Drama'],
+    type: [String]
   })
   @IsArray()
   @IsString({ each: true })
@@ -61,8 +56,19 @@ export class CreateBookDto {
   @ApiProperty({
     description: 'Tags associated with the book',
     example: ['classic', 'American literature'],
+    type: [String]
   })
   @IsArray()
   @IsString({ each: true })
   tags: string[];
+}
+
+export class CreateBookWithCoverDto extends CreateBookDto {
+  @ApiProperty({
+    description: 'Cover image of the book',
+    type: 'string',
+    format: 'binary',
+  })
+  @IsDefined()
+  cover: any;
 }
